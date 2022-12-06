@@ -1,9 +1,17 @@
 import './polyfills';
+import './styles.scss';
+import { enableProdMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideFileRouter } from '@analogjs/router';
 
 import { AppComponent } from './app/app.component';
+import { provideHttpClient } from '@angular/common/http';
+import { provideRouter } from '@angular/router';
+import routes from '@app/router';
+
+if (import.meta.env.PROD) {
+  enableProdMode();
+}
 
 bootstrapApplication(AppComponent, {
-  providers: [provideFileRouter()],
+  providers: [provideRouter(routes), provideHttpClient()],
 });

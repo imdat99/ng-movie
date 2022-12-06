@@ -14,7 +14,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@analogjs/router": "latest",
+    "@analogjs/vite-plugin-angular": "^0.2.0-alpha.18",
     "@angular/animations": "^15.0.0",
     "@angular/common": "^15.0.0",
     "@angular/compiler": "^15.0.0",
@@ -28,7 +28,6 @@
     "zone.js": "~0.11.8"
   },
   "devDependencies": {
-    "@analogjs/platform": "latest",
     "@angular-devkit/build-angular": "^15.0.0",
     "@angular/cli": "~15.0.0",
     "@angular/compiler-cli": "^15.0.0",
