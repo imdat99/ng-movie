@@ -40,11 +40,11 @@ import { EncodeURIPipe } from '@app/pipes';
             </a>
           </div>
         </div>
-        <button class="carousel-control-prev" type="button">
+        <button class="carousel-control-prev" type="button" #prevBtn>
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button">
+        <button class="carousel-control-next" type="button" #nextBtn>
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
@@ -56,6 +56,8 @@ import { EncodeURIPipe } from '@app/pipes';
 export default class BannerComponent implements AfterViewInit, OnDestroy {
   @Input() bannerData: any;
   @ViewChild('carouselSlide') carouselSlide!: ElementRef;
+  @ViewChild('prevBtn') prevBtn!: ElementRef;
+  @ViewChild('nextBtn') nextBtn!: ElementRef;
 
   ngAfterViewInit(): void {
     this.appCarousel('init');
@@ -84,18 +86,14 @@ export default class BannerComponent implements AfterViewInit, OnDestroy {
         activeItem(lastActive + 1);
       }
     };
-    this.carouselSlide.nativeElement
-      .querySelector('.carousel-control-prev')!
-      .addEventListener('click', () => {
-        if (lastActive === 0) {
-          activeItem(carouselChildNodes.length! - 1);
-        } else {
-          activeItem(lastActive - 1);
-        }
-      });
-    this.carouselSlide.nativeElement
-      .querySelector('.carousel-control-next')!
-      .addEventListener('click', activeNext);
+    this.prevBtn.nativeElement.onclick = () => {
+      if (lastActive === 0) {
+        activeItem(carouselChildNodes.length! - 1);
+      } else {
+        activeItem(lastActive - 1);
+      }
+    };
+    this.nextBtn.nativeElement.onclick = activeNext;
     const autoSlide = setInterval(() => {
       activeNext();
     }, 10000);

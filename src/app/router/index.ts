@@ -21,10 +21,20 @@ const routes: AppRoutes = [
   {
     name: 'Phim chiếu rạp',
     path: 'movie',
-    data: {
-      navigationId: 335,
-    },
-    loadComponent: () => import('@app/pages/home'),
+    loadComponent: () => import('@app/pages/movie/movie-outlet'),
+    children: [
+      {
+        path: '',
+        data: {
+          navigationId: 335,
+        },
+        loadComponent: () => import('@app/pages/home'),
+      },
+      {
+        path: ':id',
+        loadComponent: () => import('@app/pages/movie'),
+      },
+    ],
   },
   {
     name: 'Anime',
@@ -33,6 +43,10 @@ const routes: AppRoutes = [
       navigationId: 362,
     },
     loadComponent: () => import('@app/pages/home'),
+  },
+  {
+    path: 'album',
+    loadComponent: () => import('@app/pages/album'),
   },
   {
     path: 'post/:id',

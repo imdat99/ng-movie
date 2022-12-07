@@ -1,4 +1,4 @@
-import { AsyncPipe, NgFor } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -16,6 +16,7 @@ import { BehaviorSubject } from 'rxjs';
   imports: [
     RouterLinkWithHref,
     NgFor,
+    NgIf,
     FormsModule,
     AsyncPipe,
     RouterLinkActive,
@@ -40,16 +41,18 @@ import { BehaviorSubject } from 'rxjs';
         </button>
         <div class="navbar-collapse collapse" [class.show]="menuToggle">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li
-              *ngFor="let route of routes"
-              class="nav-item"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-            >
-              <a [routerLink]="route.path" class="nav-link">
-                {{ route.name }}
-              </a>
-            </li>
+            <ng-container *ngFor="let route of routes">
+              <li
+                *ngIf="route.name"
+                class="nav-item"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+              >
+                <a [routerLink]="route.path" class="nav-link">
+                  {{ route.name }}
+                </a>
+              </li>
+            </ng-container>
           </ul>
           <div class="right-container d-flex">
             <div class="theme-toggle my-auto">
