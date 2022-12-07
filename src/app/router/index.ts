@@ -4,16 +4,39 @@ const routes: AppRoutes = [
   {
     name: 'Trang chủ',
     path: '',
-    loadComponent: () => import('./home'),
-  },
-  {
-    path: 'post/:id',
-    loadComponent: () => import('./post'),
+    data: {
+      navigationId: 287,
+    },
+    pathMatch: 'full',
+    loadComponent: () => import('@app/pages/home'),
   },
   {
     name: 'Phim hàn',
     path: 'k-drama',
-    loadComponent: () => import('./post'),
+    data: {
+      navigationId: 294,
+    },
+    loadComponent: () => import('@app/pages/home'),
+  },
+  {
+    name: 'Phim chiếu rạp',
+    path: 'movie',
+    data: {
+      navigationId: 335,
+    },
+    loadComponent: () => import('@app/pages/home'),
+  },
+  {
+    name: 'Anime',
+    path: 'anime',
+    data: {
+      navigationId: 362,
+    },
+    loadComponent: () => import('@app/pages/home'),
+  },
+  {
+    path: 'post/:id',
+    loadComponent: () => import('@app/pages/post'),
   },
   {
     path: '**',

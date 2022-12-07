@@ -7,13 +7,19 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLinkWithHref } from '@angular/router';
+import { Router, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
 import routes, { AppRoutes } from '@app/router';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
   standalone: true,
-  imports: [RouterLinkWithHref, NgFor, FormsModule, AsyncPipe],
+  imports: [
+    RouterLinkWithHref,
+    NgFor,
+    FormsModule,
+    AsyncPipe,
+    RouterLinkActive,
+  ],
   selector: 'app-header',
   template: `
     <nav
@@ -23,7 +29,7 @@ import { BehaviorSubject } from 'rxjs';
     >
       <div class="container-fluid">
         <a class="navbar-brand" routerLink="/">
-          <img src="/analog.svg" alt="" class="logo-img" />
+          <img src="/logo.png" alt="" class="logo-img" />
         </a>
         <button
           class="navbar-toggler collapsed"
@@ -34,7 +40,12 @@ import { BehaviorSubject } from 'rxjs';
         </button>
         <div class="navbar-collapse collapse" [class.show]="menuToggle">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li *ngFor="let route of routes" class="nav-item">
+            <li
+              *ngFor="let route of routes"
+              class="nav-item"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
               <a [routerLink]="route.path" class="nav-link">
                 {{ route.name }}
               </a>
@@ -47,13 +58,14 @@ import { BehaviorSubject } from 'rxjs';
                   <input
                     class="form-check-input btn-toggle position-relative cursor-pointer"
                     type="checkbox"
-                    [ngModel]="$darkTheme | async"
+                    [ngModel]="check"
+                    [attr.data-check]="check"
                     (ngModelChange)="themeHandler($event)"
                   />
                 </div>
               </div>
             </div>
-            <span class="btn-search">
+            <span class="btn-search" (click)="navigateSearch()">
               <i class="fa-solid fa-magnifying-glass"></i>
             </span>
           </div>
@@ -61,26 +73,27 @@ import { BehaviorSubject } from 'rxjs';
       </div>
     </nav>
   `,
-  styles: [
-    `
-      .logo-img {
-        width: 50px;
-      }
-    `,
-  ],
+  styleUrls: ['./style.scss'],
 })
 export default class HeaderComponent implements OnInit {
   @ViewChild('appNav') nav!: ElementRef;
   routes: AppRoutes;
   menuToggle: boolean = false;
+  check: boolean = false;
   $darkTheme = new BehaviorSubject(false);
-  constructor() {
+  constructor(private readonly router: Router) {
     this.routes = routes;
     this.$darkTheme.next(localStorage.getItem('dark') === 'true');
   }
 
   ngOnInit(): void {
     this.$darkTheme.subscribe((value: boolean) => {
+      this.check = value;
+      if (value) {
+        document.body.classList.add('theme-dark');
+      } else {
+        document.body.classList.remove('theme-dark');
+      }
       localStorage.setItem('dark', String(value));
     });
   }
@@ -94,5 +107,8 @@ export default class HeaderComponent implements OnInit {
 
   themeHandler($event: boolean) {
     this.$darkTheme.next($event);
+  }
+  navigateSearch() {
+    this.router.navigateByUrl('/search');
   }
 }

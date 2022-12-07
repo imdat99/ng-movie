@@ -10,6 +10,16 @@
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
+        "build" : {
+          "options": {
+            "inlineStyleLanguage": "scss"
+          }
+        },
+        "test" : {
+          "options": {
+            "inlineStyleLanguage": "scss"
+          }
+        },
         "targets": {}
       }
     }
