@@ -12,7 +12,6 @@ import { ActivatedRoute, Params, RouterLinkWithHref } from '@angular/router';
 import { QUALITY_TYPE } from '@app/constants';
 import Artplayer from 'artplayer';
 import { catchError, concatMap, forkJoin, map, of, throwError } from 'rxjs';
-import { e } from 'vitest/dist/index-ea17aa0c';
 import playerOptions from './player';
 
 @Component({
@@ -54,7 +53,10 @@ import playerOptions from './player';
                 </div>
                 <div>
                   <a
-                    href="https://www.facebook.com/sharer/sharer.php"
+                    [attr.href]="
+                      'https://www.facebook.com/sharer/sharer.php?u=' +
+                      location.href
+                    "
                     class="fb-share-button"
                     target="_blank"
                   >
@@ -129,15 +131,16 @@ import playerOptions from './player';
   `,
 })
 export default class WatchmovieComponent implements OnInit {
+  location = window.location;
   constructor(private route: ActivatedRoute, private httpClient: HttpClient) {}
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
       this.params = params;
+      this.artPlayer?.destroy(false);
       this.loadData(params);
     });
   }
   loadData(params: Params) {
-    this.artPlayer?.destroy(false);
     this.httpClient
       .get('/movieDrama/get', { params })
       .pipe(

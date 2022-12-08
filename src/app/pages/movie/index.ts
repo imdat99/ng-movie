@@ -70,7 +70,12 @@ import { concatMap, map, tap } from 'rxjs';
                 <div class="level genres">
                   <div class="level-left">
                     <div class="level-item">
-                      <a href="#">
+                      <a
+                        [attr.href]="
+                          'https://www.facebook.com/sharer/sharer.php?u=' +
+                          location.href
+                        "
+                      >
                         <i class="fa-brands fa-square-facebook"></i>
                         Chia sẻ
                       </a>
@@ -141,6 +146,7 @@ import { concatMap, map, tap } from 'rxjs';
 })
 export default class AppMovieComponent {
   constructor(private route: ActivatedRoute, private httpClient: HttpClient) {}
+  location = window.location;
   $queryParams = this.route.queryParams;
   $params = this.route.params.pipe(map(({ id }: any) => id));
   $resData = this.$queryParams.pipe(

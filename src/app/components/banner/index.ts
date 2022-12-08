@@ -7,11 +7,18 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core';
-import { EncodeURIPipe } from '@app/pipes';
+import { RouterLinkWithHref } from '@angular/router';
+import { EncodeURIPipe, QueryParamsPipe, SlugPipe } from '@app/pipes';
 
 @Component({
   selector: 'app-banner',
-  imports: [NgFor, EncodeURIPipe],
+  imports: [
+    NgFor,
+    EncodeURIPipe,
+    RouterLinkWithHref,
+    SlugPipe,
+    QueryParamsPipe,
+  ],
   standalone: true,
   template: `
     <div class="carousel-content">
@@ -21,7 +28,10 @@ import { EncodeURIPipe } from '@app/pipes';
             class="carousel-item fade-in"
             *ngFor="let item of bannerData?.recommendContentVOList"
           >
-            <a href="/">
+            <a
+              [queryParams]="item | queryParams"
+              [routerLink]="['/movie', item | slug]"
+            >
               <div>
                 <div class="banner-img position-relative">
                   <img

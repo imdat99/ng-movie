@@ -9,7 +9,7 @@ export default function player(options: Partial<Option & { subtitle: any }>) {
       container: '.player-container',
       isLive: false,
       muted: false,
-      autoplay: false,
+      autoplay: true,
       pip: true,
       autoSize: true,
       autoMini: true,
@@ -25,7 +25,7 @@ export default function player(options: Partial<Option & { subtitle: any }>) {
       backdrop: true,
       playsInline: true,
       autoPlayback: true,
-      airplay: true,
+      airplay: false,
       theme: '#E03131',
       customType: {
         m3u8(video: any, url: string) {
@@ -36,7 +36,7 @@ export default function player(options: Partial<Option & { subtitle: any }>) {
           } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
             video.src = url;
           } else {
-            (this as any).notice.show = 'Does not support playback of m3u8';
+            this.notice.show = 'Does not support playback of m3u8';
           }
         },
       },

@@ -31,9 +31,9 @@ import { BehaviorSubject, finalize, fromEvent, map, takeUntil } from 'rxjs';
             <b class="d-block h5 my-2 pb-2 border-bottom">
               {{ item?.homeSectionName }}
             </b>
-            <movie-list
+            <!-- <movie-list
               [movieDatas]="item?.recommendContentVOList"
-            ></movie-list>
+            ></movie-list> -->
           </div>
         </ng-container>
       </div>
@@ -54,7 +54,7 @@ export default class HomeComponent implements OnInit {
   }
 
   private navigationId: number;
-  private page = new BehaviorSubject(0);
+  private $page = new BehaviorSubject(0);
   loading: boolean = false;
   isEnd = false;
   private sectionIds: number[] = [];
@@ -89,7 +89,7 @@ export default class HomeComponent implements OnInit {
 
   ngOnInit() {
     window.scrollTo(0, 0);
-    this.page
+    this.$page
       .pipe(
         map((page) => this.loadData(page)),
         takeUntil(this.$destroy)
@@ -105,7 +105,7 @@ export default class HomeComponent implements OnInit {
           !this.isEnd &&
           !this.loading
         ) {
-          this.page.next(this.page.value + 1);
+          this.$page.next(this.$page.value + 1);
         }
       });
   }
