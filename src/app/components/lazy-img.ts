@@ -1,16 +1,22 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 
 @Component({
   standalone: true,
   template: '',
 })
-export class ImgLazyComponent implements AfterViewInit {
+export class ImgLazyComponent implements AfterViewChecked {
   @ViewChild('imgContainer') imgContainer!: ElementRef;
   constructor() {
     this.observer = this.observerImg();
   }
   observer: IntersectionObserver;
-  ngAfterViewInit(): void {
+  ngAfterViewChecked(): void {
     this.getLazyImg();
   }
   private loadImg(img: HTMLElement) {

@@ -49,8 +49,12 @@ const routes: AppRoutes = [
     loadComponent: () => import('@app/pages/album'),
   },
   {
-    path: 'post/:id',
-    loadComponent: () => import('@app/pages/post'),
+    path: 'watch/:id',
+    loadComponent: () => import('@app/pages/watch'),
+  },
+  {
+    path: 'search',
+    loadComponent: () => import('@app/pages/search'),
   },
   {
     path: '**',

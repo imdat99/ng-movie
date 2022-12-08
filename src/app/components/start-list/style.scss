@@ -32,7 +32,16 @@
       width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
+      
       .star-img {
+        &::after {
+          font-family: "Font Awesome 6 Brands";
+          position: absolute;
+          z-index: 0;
+          color: var(--primary-color);
+          font-size: 3rem;
+          content: "\f420";
+        }
         display: flex;
         margin: auto;
         justify-content: center;
