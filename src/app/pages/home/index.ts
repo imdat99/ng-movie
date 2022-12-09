@@ -31,9 +31,9 @@ import { BehaviorSubject, finalize, fromEvent, map, takeUntil } from 'rxjs';
             <b class="d-block h5 my-2 pb-2 border-bottom">
               {{ item?.homeSectionName }}
             </b>
-            <!-- <movie-list
+            <movie-list
               [movieDatas]="item?.recommendContentVOList"
-            ></movie-list> -->
+            ></movie-list>
           </div>
         </ng-container>
       </div>

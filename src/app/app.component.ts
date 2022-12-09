@@ -1,14 +1,19 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { slideInAnimation } from './app.animation';
 import { FooterComponent } from './components/footer';
 import AppHeader from './components/header';
 @Component({
   selector: 'my-app',
   standalone: true,
+  animations: [slideInAnimation],
   template: `
     <app-header></app-header>
-    <div class="content-container">
-      <router-outlet></router-outlet>
+    <div
+      class="content-container"
+      [@slideInAnimation]="o.isActivated ? o.activatedRoute : ''"
+    >
+      <router-outlet #o="outlet"></router-outlet>
     </div>
     <app-footer></app-footer>
   `,

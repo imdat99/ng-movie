@@ -12,7 +12,7 @@ export default function player(options: Partial<Option & { subtitle: any }>) {
       autoplay: true,
       pip: true,
       autoSize: true,
-      autoMini: true,
+      autoMini: false,
       setting: true,
       loop: true,
       flip: true,

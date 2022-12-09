@@ -29,7 +29,6 @@ import { ImgLazyComponent } from '../lazy-img';
                   <img
                     src="/110.png"
                     alt=""
-                    class="rounded"
                     loading="lazy"
                     [attr.lazy-src]="
                       item.cover ||

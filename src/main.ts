@@ -2,11 +2,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { enableProdMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import {
-  provideRouter,
-  withDebugTracing,
-  withRouterConfig,
-} from '@angular/router';
+import { provideRouter, withRouterConfig } from '@angular/router';
 import { LocalInterceptorFn } from '@app/interceptor';
 import routes from '@app/router';
 import '@app/styles/main.scss';
@@ -22,7 +18,6 @@ bootstrapApplication(AppComponent, {
     provideAnimations(),
     provideRouter(
       routes,
-      withDebugTracing(),
       withRouterConfig({
         onSameUrlNavigation: 'reload',
       })

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import MovieListComponent from '@app/components/movie-list';
+import { EncodeURIPipe } from '@app/pipes';
 import { DestroyService } from '@app/services/destroy-service';
 import { BehaviorSubject, finalize, fromEvent, map, takeUntil } from 'rxjs';
 
@@ -12,6 +13,7 @@ import { BehaviorSubject, finalize, fromEvent, map, takeUntil } from 'rxjs';
   imports: [MovieListComponent, NgIf],
   providers: [DestroyService],
   template: `
+    <div class="hero-header" [style]="backgroundStyle"></div>
     <div class="container my-5">
       <div class="home-content">
         <div class="my-5">
@@ -27,6 +29,25 @@ import { BehaviorSubject, finalize, fromEvent, map, takeUntil } from 'rxjs';
       </div>
     </div>
   `,
+  styles: [
+    `
+      .hero-header {
+        position: fixed;
+        z-index: -1;
+        height: 70vh;
+        width: 100vw;
+        background: black;
+        overflow: hidden;
+        object-fit: center;
+        background-repeat: no-repeat;
+
+        background: var(
+          --background-color
+        ); /* fallback colour. Make sure this is just one solid colour. */
+        /* The least supported option. */
+      }
+    `,
+  ],
 })
 export default class AlbumComponent implements OnInit {
   constructor(
@@ -39,10 +60,10 @@ export default class AlbumComponent implements OnInit {
   isEnd = false;
   resData: any;
   content: any[] = [];
+  backgroundStyle: string = '';
   private $page = new BehaviorSubject(0);
   ngOnInit() {
     this.route.queryParams.subscribe((queryParams: Params) => {
-      // this.loadData(queryParams);
       this.queryParams = queryParams;
     });
 
@@ -84,6 +105,12 @@ export default class AlbumComponent implements OnInit {
           if (data.content.length) {
             const { content, ...otherData } = data;
             this.resData = otherData;
+            this.backgroundStyle = `
+            background: linear-gradient(var(--overlay-color),var(--background-color)),url("${encodeURI(
+              otherData?.shareImg
+            )}");
+            background-size: cover;
+            `;
             this.content.push(...content);
           } else {
             this.isEnd = true;
