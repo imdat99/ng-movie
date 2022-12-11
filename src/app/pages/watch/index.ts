@@ -9,22 +9,29 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute, Params, RouterLinkWithHref } from '@angular/router';
+import { PlayerComponent } from '@app/components/player';
 import { QUALITY_TYPE } from '@app/constants';
 import Artplayer from 'artplayer';
-import { catchError, concatMap, finalize, forkJoin, map, of, take } from 'rxjs';
-import playerOptions from './player';
+import {
+  BehaviorSubject,
+  catchError,
+  concatMap,
+  finalize,
+  forkJoin,
+  map,
+  of,
+  take,
+} from 'rxjs';
 
 @Component({
   selector: 'watch-movie',
   standalone: true,
   styleUrls: ['./style.scss'],
-  imports: [NgIf, AsyncPipe, NgFor, RouterLinkWithHref],
+  imports: [NgIf, AsyncPipe, NgFor, RouterLinkWithHref, PlayerComponent],
   template: `
-    <div class="video">
-      <div class="player-container" [style.height]="'300px'" #player></div>
-    </div>
     <ng-container *ngIf="resData as data; else spin">
       <ng-container *ngIf="!loading; else spin">
+        <app-player [palyerData]="data.playerData"></app-player>
         <section class="section-watch container">
           <div class="text-center">
             Phim load chậm?
@@ -146,20 +153,15 @@ export default class WatchmovieComponent implements OnInit {
     private httpClient: HttpClient,
     private cdr: ChangeDetectorRef
   ) {}
-  // ngAfterContentChecked(): void {
-  //   if (!this.loading && this.player) {
-  //     console.log(this.player.nativeElement);
-  //   }
-  //   // throw new Error('Method not implemented.');
-  // }
+
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
       this.params = params;
-      this.artPlayer?.destroy(false);
       this.cdr.detectChanges();
       this.loadData(params);
     });
   }
+
   loadData(params: Params) {
     this.loading = true;
     this.httpClient
@@ -188,22 +190,21 @@ export default class WatchmovieComponent implements OnInit {
                   url: data?.mediaUrl,
                 })
               );
-              this.resData = movieData;
-              this.artPlayer = playerOptions({
-                container: this.player.nativeElement,
-                url: mediaList[0].url,
-                poster: encodeURI(movieData.coverHorizontalUrl),
-                subtitle: episodeVoData.subtitlingList,
-                quality: mediaList,
-              });
+              this.loading = false;
+              this.resData = {
+                ...movieData,
+                playerData: {
+                  url: mediaList[0].url,
+                  poster: encodeURI(movieData.coverHorizontalUrl),
+                  subtitle: episodeVoData.subtitlingList,
+                  quality: mediaList,
+                },
+              };
             }
           );
         }),
-        finalize(() => {
-          this.loading = false;
-          // console.log(this.player.nativeElement);
-        }),
-        catchError(() => {
+        catchError((e) => {
+          console.log(e);
           this.error = true;
           this.artPlayer?.destroy(true);
           return of(null);
@@ -212,14 +213,12 @@ export default class WatchmovieComponent implements OnInit {
       )
       .subscribe();
   }
-  @ViewChild('player') player!: ElementRef;
   artPlayer!: Artplayer;
   error = false;
   loading = false;
   resData: any;
   params!: Params;
   $params = this.route.params.pipe(map((e) => e['id']));
-
   handleLoadCham() {
     window.open(
       `https://www.google.com/search?q=${encodeURI('Phim load chậm')}`

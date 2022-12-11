@@ -50,7 +50,7 @@ export default function player(options: Partial<Option & { subtitle: any }>) {
         type: 'srt',
         style: {
           color: '#fff',
-          fontSize: '2.5rem',
+          fontSize: '30px',
         },
         encoding: 'utf-8',
       },
