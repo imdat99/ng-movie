@@ -30,15 +30,11 @@ export const slideInAnimation = trigger('slideInAnimation', [
         [
           style({
             height: '100vh',
-            // transform: 'scale(1)',
-            // transform: 'translateY(100%)',
             opacity: '0%',
           }),
           animate(
             '0.5s ease-in-out',
             style({
-              // transform: 'scale(0)',
-              // transform: 'translatey(0%)',
               opacity: '100%',
             })
           ),
@@ -49,15 +45,11 @@ export const slideInAnimation = trigger('slideInAnimation', [
         ':leave',
         [
           style({
-            // transform: 'scale(0)',
-            // transform: 'translateX(0%)',
             opacity: '100%',
           }),
           animate(
             '0.3s ease-in-out',
             style({
-              // transform: 'scale(1)',
-              // transform: 'translateX(-100%)',
               opacity: '0%',
             })
           ),

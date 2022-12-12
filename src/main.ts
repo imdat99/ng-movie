@@ -5,6 +5,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withRouterConfig } from '@angular/router';
 import { LocalInterceptorFn } from '@app/interceptor';
 import routes from '@app/router';
+import { DestroyService } from '@app/services/destroy-service';
 import '@app/styles/main.scss';
 import { AppComponent } from './app/app.component';
 import './polyfills';
@@ -12,7 +13,6 @@ import './polyfills';
 if (import.meta.env.PROD) {
   enableProdMode();
 }
-
 bootstrapApplication(AppComponent, {
   providers: [
     provideAnimations(),
@@ -23,5 +23,6 @@ bootstrapApplication(AppComponent, {
       })
     ),
     provideHttpClient(withInterceptors([LocalInterceptorFn])),
+    DestroyService,
   ],
 });

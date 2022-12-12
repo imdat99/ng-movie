@@ -9,19 +9,20 @@ import AppHeader from './components/header';
   animations: [slideInAnimation],
   template: `
     <app-header></app-header>
-    <div
+    <section
       class="content-container"
       [@slideInAnimation]="o.isActivated ? o.activatedRoute : ''"
     >
       <router-outlet #o="outlet"></router-outlet>
-    </div>
+    </section>
     <app-footer></app-footer>
   `,
   imports: [FooterComponent, RouterOutlet, AppHeader],
   styles: [
     `
       .content-container {
-        min-height: calc(100vh - 248px);
+        /* min-height: calc(100vh - 248px); */
+        min-height: 100vh;
         padding-top: 58px;
         display: block;
       }
