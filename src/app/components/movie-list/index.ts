@@ -1,8 +1,8 @@
-import { NgFor } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { RouterLinkWithHref } from '@angular/router';
-import { EncodeURIPipe, QueryParamsPipe, SlugPipe } from '@app/pipes';
-import { ImgLazyComponent } from '../lazy-img';
+import { NgFor } from "@angular/common";
+import { Component, Input } from "@angular/core";
+import { RouterLinkWithHref } from "@angular/router";
+import { EncodeURIPipe, QueryParamsPipe, SlugPipe } from "@app/pipes";
+import { ImgLazyComponent } from "../lazy-img";
 
 @Component({
   standalone: true,
@@ -13,8 +13,8 @@ import { ImgLazyComponent } from '../lazy-img';
     SlugPipe,
     QueryParamsPipe,
   ],
-  selector: 'movie-list',
-  styleUrls: ['./style.scss'],
+  selector: "movie-list",
+  styleUrls: ["./style.scss"],
   template: `
     <div class="movie-list" #imgContainer>
       <div class="row">
@@ -27,7 +27,7 @@ import { ImgLazyComponent } from '../lazy-img';
               <div class="poster-container">
                 <div class="poster-img">
                   <img
-                    src="/110.png"
+                    src="/assets/110.png"
                     alt=""
                     loading="lazy"
                     [attr.lazy-src]="
@@ -35,12 +35,12 @@ import { ImgLazyComponent } from '../lazy-img';
                         item.imageUrl ||
                         item?.coverHorizontalUrl ||
                         item?.image ||
-                        '/110.png' | encodeURI
+                        '/assets/110.png' | encodeURI
                     "
                   />
                 </div>
                 <span class="poster-name">
-                  {{ item.title || item?.name || 'unknown' }}
+                  {{ item.title || item?.name || "unknown" }}
                 </span>
               </div>
             </a>

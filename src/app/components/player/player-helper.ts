@@ -1,12 +1,12 @@
-import Artplayer from 'artplayer';
-import { Option } from 'artplayer/types/option';
-import Hls from 'hls.js';
+import Artplayer from "artplayer";
+import { Option } from "artplayer/types/option";
+import Hls from "hls.js";
 export default function player(options: Partial<Option & { subtitle: any }>) {
   const { subtitle, ...artOptions } = options;
   const artInstant = new Artplayer(
     {
-      url: '',
-      container: '.player-container',
+      url: "",
+      container: ".player-container",
       isLive: false,
       muted: false,
       autoplay: true,
@@ -26,17 +26,17 @@ export default function player(options: Partial<Option & { subtitle: any }>) {
       playsInline: true,
       autoPlayback: true,
       airplay: false,
-      theme: '#E03131',
+      theme: "#E03131",
       customType: {
         m3u8(video: any, url: string) {
           if (Hls.isSupported()) {
             const hls = new Hls();
             hls.loadSource(url);
             hls.attachMedia(video);
-          } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
             video.src = url;
           } else {
-            this.notice.show = 'Does not support playback of m3u8';
+            this.notice.show = "Does not support playback of m3u8";
           }
         },
       },
@@ -44,45 +44,45 @@ export default function player(options: Partial<Option & { subtitle: any }>) {
       subtitle: {
         url:
           (
-            subtitle.find((item: any) => item?.languageAbbr === 'vi') ||
+            subtitle.find((item: any) => item?.languageAbbr === "vi") ||
             subtitle[0]
-          )?.subtitlingUrl || '',
-        type: 'srt',
+          )?.subtitlingUrl || "",
+        type: "srt",
         style: {
-          color: '#fff',
-          fontSize: '30px',
+          color: "#fff",
+          fontSize: "30px",
         },
-        encoding: 'utf-8',
+        encoding: "utf-8",
       },
       settings: [
         {
           width: 200,
-          html: 'Subtitle',
+          html: "Subtitle",
           tooltip:
             (
-              subtitle.find((item: any) => item?.languageAbbr === 'vi') ||
+              subtitle.find((item: any) => item?.languageAbbr === "vi") ||
               subtitle[0]
-            )?.language || '',
+            )?.language || "",
           icon: '<img width="22" heigth="22" src="https://artplayer.org/assets/img/subtitle.svg">',
           selector: [
             {
-              html: 'Display',
-              tooltip: 'Show',
+              html: "Display",
+              tooltip: "Show",
               switch: true,
               onSwitch: function (item) {
-                item.tooltip = item['switch'] ? 'Hide' : 'Show';
-                artInstant.subtitle.show = !item['switch'];
-                return !item['switch'];
+                item.tooltip = item["switch"] ? "Hide" : "Show";
+                artInstant.subtitle.show = !item["switch"];
+                return !item["switch"];
               },
             },
             ...subtitle.map((item: any) => ({
-              default: item?.languageAbbr === 'vi',
+              default: item?.languageAbbr === "vi",
               html: item?.language,
               url: item?.subtitlingUrl,
             })),
           ],
           onSelect: function (item) {
-            artInstant.subtitle.switch(item['url'], {
+            artInstant.subtitle.switch(item["url"], {
               name: item.html,
             });
             return item.html;
@@ -91,15 +91,15 @@ export default function player(options: Partial<Option & { subtitle: any }>) {
       ],
       layers: [
         {
-          html: '<img width="100" src="/logo.png">',
+          html: '<img width="100" src="/assets/logo.png">',
           click: function () {
-            window.open('http://dat09.fun/home');
+            window.open("http://dat09.fun/home");
           },
           style: {
-            position: 'absolute',
-            top: '20px',
-            right: '20px',
-            opacity: '0.75',
+            position: "absolute",
+            top: "20px",
+            right: "20px",
+            opacity: "0.75",
           },
         },
       ],

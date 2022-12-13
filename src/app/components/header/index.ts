@@ -1,15 +1,15 @@
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from "@angular/common";
 import {
   Component,
   ElementRef,
   HostListener,
   OnInit,
   ViewChild,
-} from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router, RouterLinkActive, RouterLinkWithHref } from '@angular/router';
-import routes, { AppRoutes } from '@app/router';
-import { BehaviorSubject } from 'rxjs';
+} from "@angular/core";
+import { FormsModule } from "@angular/forms";
+import { Router, RouterLinkActive, RouterLinkWithHref } from "@angular/router";
+import routes, { AppRoutes } from "@app/router";
+import { BehaviorSubject } from "rxjs";
 
 @Component({
   standalone: true,
@@ -21,7 +21,7 @@ import { BehaviorSubject } from 'rxjs';
     AsyncPipe,
     RouterLinkActive,
   ],
-  selector: 'app-header',
+  selector: "app-header",
   template: `
     <nav
       class="navbar navbar-expand-md"
@@ -30,7 +30,7 @@ import { BehaviorSubject } from 'rxjs';
     >
       <div class="container-fluid">
         <a class="navbar-brand" routerLink="/">
-          <img src="/logo.png" alt="" class="logo-img" />
+          <img src="/assets/logo.png" alt="" class="logo-img" />
         </a>
         <button
           class="navbar-toggler collapsed"
@@ -76,32 +76,32 @@ import { BehaviorSubject } from 'rxjs';
       </div>
     </nav>
   `,
-  styleUrls: ['./style.scss'],
+  styleUrls: ["./style.scss"],
 })
 export default class HeaderComponent implements OnInit {
-  @ViewChild('appNav') nav!: ElementRef;
+  @ViewChild("appNav") nav!: ElementRef;
   routes: AppRoutes;
   menuToggle: boolean = false;
   check: boolean = false;
   $darkTheme = new BehaviorSubject(false);
   constructor(private readonly router: Router) {
     this.routes = routes;
-    this.$darkTheme.next(localStorage.getItem('dark') === 'true');
+    this.$darkTheme.next(localStorage.getItem("dark") === "true");
   }
 
   ngOnInit(): void {
     this.$darkTheme.subscribe((value: boolean) => {
       this.check = value;
       if (value) {
-        document.body.classList.add('theme-dark');
+        document.body.classList.add("theme-dark");
       } else {
-        document.body.classList.remove('theme-dark');
+        document.body.classList.remove("theme-dark");
       }
-      localStorage.setItem('dark', String(value));
+      localStorage.setItem("dark", String(value));
     });
   }
 
-  @HostListener('document:mousedown', ['$event'])
+  @HostListener("document:mousedown", ["$event"])
   onGlobalClick(event: MouseEvent): void {
     if (!this.nav.nativeElement.contains(event.target)) {
       this.menuToggle = false;
@@ -112,6 +112,6 @@ export default class HeaderComponent implements OnInit {
     this.$darkTheme.next($event);
   }
   navigateSearch() {
-    this.router.navigateByUrl('/search');
+    this.router.navigateByUrl("/search");
   }
 }

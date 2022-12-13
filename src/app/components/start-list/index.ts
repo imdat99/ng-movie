@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf } from "@angular/common";
 import {
   AfterViewInit,
   Component,
@@ -6,13 +6,13 @@ import {
   Input,
   OnInit,
   ViewChild,
-} from '@angular/core';
-import { RouterLinkWithHref } from '@angular/router';
-import { EncodeURIPipe, QueryParamsPipe, SlugPipe } from '@app/pipes';
-import { ImgLazyComponent } from '../lazy-img';
+} from "@angular/core";
+import { RouterLinkWithHref } from "@angular/router";
+import { EncodeURIPipe, QueryParamsPipe, SlugPipe } from "@app/pipes";
+import { ImgLazyComponent } from "../lazy-img";
 
 @Component({
-  selector: 'movie-stars',
+  selector: "movie-stars",
   standalone: true,
   imports: [
     NgFor,
@@ -43,7 +43,7 @@ import { ImgLazyComponent } from '../lazy-img';
                 <div class="star-inner">
                   <div class="star-img">
                     <img
-                      src="/110.png"
+                      src="/assets/110.png"
                       alt=""
                       loading="lazy"
                       [attr.lazy-src]="
@@ -51,12 +51,12 @@ import { ImgLazyComponent } from '../lazy-img';
                           item.imageUrl ||
                           item?.coverHorizontalUrl ||
                           item?.image ||
-                          '/110.png' | encodeURI
+                          '/assets/110.png' | encodeURI
                       "
                     />
                   </div>
                   <span class="star-name" *ngIf="item.title || item.localName">
-                    {{ item.title || item.localName || '' }}
+                    {{ item.title || item.localName || "" }}
                   </span>
                 </div>
               </a>
@@ -66,23 +66,23 @@ import { ImgLazyComponent } from '../lazy-img';
       </div>
     </div>
   `,
-  styleUrls: ['./style.scss'],
+  styleUrls: ["./style.scss"],
 })
 export default class MovieStarsComponent
   extends ImgLazyComponent
   implements AfterViewInit
 {
   @Input() startData: any;
-  @ViewChild('prevBtn') prevBtn!: ElementRef;
-  @ViewChild('nextBtn') nextBtn!: ElementRef;
-  @ViewChild('starContainer') starContainer!: ElementRef;
+  @ViewChild("prevBtn") prevBtn!: ElementRef;
+  @ViewChild("nextBtn") nextBtn!: ElementRef;
+  @ViewChild("starContainer") starContainer!: ElementRef;
   ngAfterViewInit(): void {
     this.appCarousel();
   }
 
   appCarousel() {
     const product = this.starContainer.nativeElement.querySelectorAll(
-      '.star-content'
+      ".star-content"
     ) as NodeListOf<HTMLElement>;
     let product_page = Math.ceil(product.length / 4);
     let l = 0;
@@ -108,7 +108,7 @@ export default class MovieStarsComponent
           l = 0;
         }
         for (const i of product as any) {
-          (i as any).style.left = '-' + l + '%';
+          (i as any).style.left = "-" + l + "%";
         }
       }
     };
@@ -119,7 +119,7 @@ export default class MovieStarsComponent
       }
       for (const i of product as any) {
         if (product_page > 1) {
-          (i as any).style.left = '-' + l + '%';
+          (i as any).style.left = "-" + l + "%";
         }
       }
     };

@@ -1,21 +1,21 @@
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { AsyncPipe, NgFor, NgIf } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
+import { Component } from "@angular/core";
 import {
   ActivatedRoute,
   NavigationStart,
   Router,
   RouterLinkWithHref,
-} from '@angular/router';
-import MovieListComponent from '@app/components/movie-list';
-import MovieStarsComponent from '@app/components/start-list';
-import { EncodeURIPipe } from '@app/pipes';
-import { DestroyService } from '@app/services/destroy-service';
-import { concatMap, filter, map, of, takeUntil, tap } from 'rxjs';
+} from "@angular/router";
+import MovieListComponent from "@app/components/movie-list";
+import MovieStarsComponent from "@app/components/start-list";
+import { EncodeURIPipe } from "@app/pipes";
+import { DestroyService } from "@app/services/destroy-service";
+import { concatMap, filter, map, of, takeUntil, tap } from "rxjs";
 
 @Component({
-  selector: 'app-movie',
-  styleUrls: ['./style.scss'],
+  selector: "app-movie",
+  styleUrls: ["./style.scss"],
   imports: [
     MovieStarsComponent,
     RouterLinkWithHref,
@@ -65,7 +65,7 @@ import { concatMap, filter, map, of, takeUntil, tap } from 'rxjs';
                 </div>
                 <div class="meta">
                   <span class="imb-icon">
-                    <img src="/imdb.svg" alt="imdb" />
+                    <img src="/assets/imdb.svg" alt="imdb" />
                   </span>
                   <span class="imb-rating">
                     {{ data.score }}
@@ -110,7 +110,7 @@ import { concatMap, filter, map, of, takeUntil, tap } from 'rxjs';
                   <div class="hoz-content">
                     <p>Quốc gia</p>
                     <span>
-                      {{ data.areaNameList.join(', ') }}
+                      {{ data.areaNameList.join(", ") }}
                     </span>
                   </div>
                   <div class="hoz-content">
@@ -121,7 +121,7 @@ import { concatMap, filter, map, of, takeUntil, tap } from 'rxjs';
                   </div>
                 </div>
                 <div class="intro">
-                  {{ data.introduction || 'Đang cập nhật...' }}
+                  {{ data.introduction || "Đang cập nhật..." }}
                 </div>
                 <div *ngIf="data.starList.length" class="cast mt-5">
                   <movie-stars
@@ -166,7 +166,7 @@ export default class AppMovieComponent {
       .pipe(
         filter((e) => e instanceof NavigationStart),
         tap(() => {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          window.scrollTo({ top: 0, behavior: "smooth" });
         }),
         takeUntil(this.$destroy)
       )
@@ -176,13 +176,13 @@ export default class AppMovieComponent {
   loadData() {
     return this.route.queryParams.pipe(
       concatMap((queryParams) => {
-        this.id = queryParams['id'];
+        this.id = queryParams["id"];
         if (this.resData[this.id]) {
           return of(null);
         }
         this.loading = true;
         return this.httpClient
-          .get('/movieDrama/get', { params: queryParams })
+          .get("/movieDrama/get", { params: queryParams })
           .pipe(
             tap(({ data }: any) => {
               this.resData[this.id] = data;

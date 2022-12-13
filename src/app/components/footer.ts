@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
   standalone: true,
-  selector: 'app-footer',
+  selector: "app-footer",
   template: `
     <footer class="w-100 py-4 flex-shrink-0">
       <div class="container py-4">
@@ -10,7 +10,7 @@ import { Component } from '@angular/core';
           <div class="col-lg-8 col-md-6">
             <a href="/">
               <div class="footer-brand mb-2">
-                <img src="/logo.png" alt="" class="logo-img" />
+                <img src="/assets/logo.png" alt="" class="logo-img" />
               </div>
             </a>
             <p class="small text-muted">
